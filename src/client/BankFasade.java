@@ -44,7 +44,7 @@ public class BankFasade {
 	}
 
 	/*
-	 * Login user and store login user for futter use
+	 * Login user and store login user for further use
 	 */
 	public boolean login(String login, String password) {
 		boolean userExist = false;
