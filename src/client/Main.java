@@ -26,7 +26,6 @@ public class Main {
 		while (clientRunning) {
 			printMenu();
 			command = input.nextLine();
-
 			checkOptions(command);
 		}
 	}

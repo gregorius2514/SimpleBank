@@ -114,28 +114,29 @@ public class BankFasade {
 
 			if (userBalance == 0)
 				return ACCOUNT_HASNT_MONEY;
-			
 			if (userBalance < countOfMoney)
 				countOfMoney = userBalance;
 
-			accounts.remove(userAccount);
-
 			int updatedUserBalance = userBalance - countOfMoney;
 			userAccount.setBalance(updatedUserBalance);
-
-			accounts.add(userAccount);
-
+	
 			int currentAccoutBalance = destinationAccount.getBalance();
 			currentAccoutBalance = currentAccoutBalance + countOfMoney;
-
-			destinationAccount.setBalance(currentAccoutBalance);
-			accounts.remove(destinationAccount); // remove old copy
-			cleanAccountsFile();
-			accounts.add(destinationAccount); // add new copy with new values
-			accountWriter.updateFile((List<Object>) (List<?>) accounts);
+			
+			updateAccountBalance(userAccount, updatedUserBalance);
+			updateAccountBalance(destinationAccount, currentAccoutBalance);
 			accountExist = ACCOUNT_EXIST;
 		}
 		return accountExist;
+	}
+	
+	private void updateAccountBalance(Account destinationAccount, int newBalance) throws Exception {
+		accounts.remove(destinationAccount);
+		cleanAccountsFile();
+		destinationAccount.setBalance(newBalance);
+		accounts.add(destinationAccount);
+		accountWriter.updateFile((List<Object>) (List<?>) accounts);
+		
 	}
 
 	private Account findAccount(int accountNumber) {
