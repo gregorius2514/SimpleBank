@@ -92,3 +92,7 @@ fabric.properties
 # Custom ignores
 **/.idea
 **/.settings/*
+
+**/.gradle
+
+**/gradlew.bat
