@@ -1,6 +1,7 @@
 package universe.account
 
-import pl.universe.account.Account
+import universe.CsvSeparator
+import universe.CsvSeparator.*
 import universe.DataReader
 import java.io.BufferedReader
 import java.io.FileReader
@@ -9,28 +10,21 @@ import java.nio.file.Path
 import java.util.*
 
 
-class AccountReader(val accountsFilePath: Path) : DataReader<Account> {
-
-    companion object {
-        private const val ACCOUNT_CSV_COLUMNS_SEPARATOR = ","
-    }
+class AccountReader(private val accountsFilePath: Path) : DataReader<Account> {
 
     override fun readData(): List<Account> {
         val accounts = ArrayList<Account>()
 
         BufferedReader(FileReader(accountsFilePath.toFile()))
                 .use { accountReader ->
-                    {
-                        val account = readAccount(accountReader.readLine())
-                        accounts.add(account)
-                    }
+                    val account = readAccount(accountReader.readLine())
+                    accounts.add(account)
                 }
-
         return accounts
     }
 
     private fun readAccount(accountRecord: String): Account {
-        val (number, balance, owner) = accountRecord.split(ACCOUNT_CSV_COLUMNS_SEPARATOR)
+        val (number, balance, owner) = accountRecord.split(COMMA.separator)
 
         return Account(parseInt(number), parseInt(balance), owner)
     }

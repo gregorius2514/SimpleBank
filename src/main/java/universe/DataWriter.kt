@@ -1,9 +1,9 @@
 package universe
 
-interface DataWriter {
+interface DataWriter<T> {
 
     //FIXME Change names
-//    writeData(record : Object)
+    fun writeData(record : T)
     //FIXME change names and throw custom exception
-//    updateFile(records : List<Object>)
+    fun overrideAllData(records : List<T>)
 }
