@@ -96,3 +96,5 @@ fabric.properties
 **/.gradle
 
 **/gradlew.bat
+
+**/build
