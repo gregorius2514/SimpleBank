@@ -12,8 +12,7 @@ data class User(
 
     fun getBirthdateAsFormattedString(
             birthdateFormatter: DateTimeFormatter)
-            : String? {
-
+            : String {
         return birthdate.format(birthdateFormatter)
     }
 }

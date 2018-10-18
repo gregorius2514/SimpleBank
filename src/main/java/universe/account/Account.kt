@@ -1,3 +1,3 @@
 package universe.account
 
-data class Account(val number: Int, val balance: Int, val owner: String)
+data class Account(val number: Int, var balance: Int, val owner: String)
