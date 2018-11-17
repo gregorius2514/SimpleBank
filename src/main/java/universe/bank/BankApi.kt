@@ -8,6 +8,7 @@ import universe.account.AccountWriter
 import universe.user.User
 import universe.user.UserReader
 import universe.user.UserWriter
+import java.lang.RuntimeException
 import java.time.format.DateTimeFormatter
 
 //TODO Remove Api from class name
@@ -75,10 +76,10 @@ class BankApi(private val userWriter: UserWriter, private val userReader: UserRe
         } else if (loggedUserAccount.balance < moneyToTransfer) {
             val transferedMoney = transferMoneyFromUserAccount(loggedUserAccount, destinationAccount, loggedUserAccount
                     .balance)
-            return Either.right("Transfered all user's [${loggedUserAccount.owner}] money [${transferedMoney}]")
+            return Either.right("Transfered all user's [${loggedUserAccount.owner}] money [$transferedMoney]")
         }
         val transferedMoney = transferMoneyFromUserAccount(loggedUserAccount, destinationAccount, moneyToTransfer)
-        return Either.right("Transfered money [${transferedMoney}] from account [${loggedUserAccount.number}] to account [${destinationAccount.number}]")
+        return Either.right("Transfered money [$transferedMoney] from account [${loggedUserAccount.number}] to account [${destinationAccount.number}]")
     }
 
     private fun transferMoneyFromUserAccount(loggedUserAccount: Account, destinationAccount: Account, moneyToTransfer: Int): Int {
@@ -91,10 +92,18 @@ class BankApi(private val userWriter: UserWriter, private val userReader: UserRe
     }
 
     private fun findDestinationAccount(accountNumber: Int): Account {
-        throw NotImplementedException()
+        accounts
+                .forEach { account ->
+                    if (accountNumber.equals(account)) {
+                        return account
+                    }
+                }
+        //TODO create custom runtime exception
+        throw RuntimeException("Account [$accountNumber] doesn't exist")
     }
 
     private fun getLoggedUserAccount(): Account {
+
         throw NotImplementedException()
     }
 }
